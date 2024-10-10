@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function SignUp() {
   const [isHide, setHide] = useState(true);
   let navigate = useNavigate();
 
   return (
     <main className="flex flex-col items-center">
-      <img src="/wlcm.png" alt="" className="w-[151px] h-[157px] mt-10" />
+      <img src="/sgnup.png" alt="" className="w-[200px] h-[188px] mt-6" />
       <h1 className="text-[25px] text-[#101010] leading-[29px] font-[700] mt-5">
-        Welcome back
+        Create your account
       </h1>
       <section className="flex flex-col gap-4 mt-[46px]">
         <label
@@ -71,17 +71,17 @@ function Login() {
       </section>
       <section className="flex flex-col gap-4 mt-40 mb-[50px]">
         <button className="w-[343px] h-[50px] rounded-[10px] bg-[#274d76] flex items-center justify-center text-base text-[#fff] font-normal leading-[19px]">
-          Sign in
+          Sign up
         </button>
         <button
           className="w-[343px] h-[50px] rounded-[10px] bg-[#fff] border-[2px] border-solid border-input flex items-center justify-center text-base text-[#274d76] font-normal leading-[19px]"
-          onClick={() => navigate("/Sign_up")}
+          onClick={() => navigate("/Sign_in")}
         >
-          Create new account
+          Already have an account
         </button>
       </section>
     </main>
   );
 }
 
-export default Login;
+export default SignUp;
