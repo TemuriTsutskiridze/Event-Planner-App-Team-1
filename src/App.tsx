@@ -9,7 +9,7 @@ import Login from "./Pages/Login";
 
 function App() {
   return (
-    <main>
+    <main className="w-full min-h-scroll flex flex-col items-center">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />

@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
+    colors: {
+      input: "rgba(39, 77, 118, 0.1)",
+    },
   },
   plugins: [],
 };
