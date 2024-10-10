@@ -1,7 +1,22 @@
 import "./App.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  BrowserRouter,
+} from "react-router-dom";
+import Login from "./Pages/Login";
 
 function App() {
-  return <></>;
+  return (
+    <main>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    </main>
+  );
 }
 
 export default App;
