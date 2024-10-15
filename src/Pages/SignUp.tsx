@@ -70,7 +70,10 @@ function SignUp() {
         </label>
       </section>
       <section className="flex flex-col gap-4 mt-40 mb-[50px]">
-        <button className="w-[343px] h-[50px] rounded-[10px] bg-[#274d76] flex items-center justify-center text-base text-[#fff] font-normal leading-[19px]">
+        <button
+          className="w-[343px] h-[50px] rounded-[10px] bg-[#274d76] flex items-center justify-center text-base text-[#fff] font-normal leading-[19px]"
+          onClick={() => navigate("/events")}
+        >
           Sign up
         </button>
         <button
