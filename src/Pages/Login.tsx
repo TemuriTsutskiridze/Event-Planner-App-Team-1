@@ -4,31 +4,45 @@ import * as Yup from "yup";
 import { useAuth } from "../Context/useAuth";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+
 type LoginFormsInputs = {
   email: string;
   password: string;
 };
-
+// const { err } = useAuth();
 const validation = Yup.object().shape({
-  email: Yup.string().required("Email is required"),
+  email: Yup.string()
+    .required("Email is required")
+    .email("Must be an email pormat")
+    .test("isRegistered", "This email is not registered", function (value) {
+      // Check if the email is registered based on the server response
+      // if (err === "Email not registered") {
+      //   return false; // Return false to indicate an error
+      // }
+      return true; // Return true if the email is registered
+    }),
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters"),
 });
 
 function Login() {
-  const { loginUser } = useAuth();
+  const { loginUser, err } = useAuth();
+  if (err) {
+    console.log(err.data);
+  }
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormsInputs>({ resolver: yupResolver(validation) });
 
-  const handleLogin = (form: LoginFormsInputs) => {
+  const handleLogin = async (form: LoginFormsInputs) => {
     loginUser(form.email, form.password);
+    console.log();
   };
 
-  console.log(localStorage);
+  console.log();
 
   const [isHide, setHide] = useState(true);
   let navigate = useNavigate();
