@@ -1,7 +1,7 @@
 export type UserProfileToken = {
   userName: string;
   email: string;
-  token: string;
+  access: string;
   password: string;
 };
 

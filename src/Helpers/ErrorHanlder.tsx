@@ -1,9 +1,13 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAuth } from "../Context/useAuth";
 
 export const handleError = (error: any) => {
   if (axios.isAxiosError(error)) {
+    const { setErr } = useAuth();
     var err = error.response;
+    console.log(err);
+    setErr(err);
     if (Array.isArray(err?.data.errors)) {
       for (let val of err.data.errors) {
         toast.warning(val.description);

@@ -6,19 +6,33 @@ import * as Yup from "yup";
 import { useAuth } from "../Context/useAuth";
 
 type RegistrationFormsInputs = {
-  email: string;
-  password: string;
-  passwordRe: string;
   username: string;
+  password1: string;
+  password2: string;
+  email: string;
 };
 
 const validation = Yup.object().shape({
-  email: Yup.string().required("Email is required"),
-  password: Yup.string()
+  email: Yup.string()
+    .required("Email is required")
+    .email("Must be email format"),
+  password1: Yup.string()
     .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-  passwordRe: Yup.string().required(),
-  username: Yup.string().required(),
+    .min(8, "Password must be at least 8 characters")
+    .matches(
+      /^(?=.*[a-zA-Z])|(?=.*[!@#$%^&*()_+\-=$$$${};':"\\|,.<>\/?]).*$/,
+      "Password mustn't only numeric"
+    ),
+  password2: Yup.string()
+    .required("Password is required")
+    .oneOf([Yup.ref("password1")], "Passwords must match"),
+  username: Yup.string()
+    .required("Username is required")
+    .max(150, "Must be 150 characters or less")
+    .matches(
+      /^[a-zA-Z0-9@.\+\-_\/]+$/,
+      "Only leters, digits, and @/./+/-/_ are allowed"
+    ),
 });
 
 function SignUp() {
@@ -30,7 +44,8 @@ function SignUp() {
   } = useForm<RegistrationFormsInputs>({ resolver: yupResolver(validation) });
 
   const handleRegistration = (form: RegistrationFormsInputs) => {
-    registerUser(form.email, form.password, form.passwordRe, form.username);
+    registerUser(form.username, form.password1, form.password2, form.email);
+    console.log(localStorage);
   };
 
   const [isHide, setHide] = useState(true);
@@ -87,7 +102,7 @@ function SignUp() {
               className={`${
                 isHide ? "text-2xl tracking-[6px]" : "text-base tracking-normal"
               } outline-none appearance-none w-[280px] h-[19px] pl-1 bg-transparent  text-[#000] font-400 leading-[19px] `}
-              {...register("password")}
+              {...register("password1")}
             />
             {!isHide ? (
               <svg
@@ -118,7 +133,7 @@ function SignUp() {
               </svg>
             )}
           </label>
-          {errors.password ? <span>{errors.password.message}</span> : ""}
+          {errors.password1 ? <span>{errors.password1.message}</span> : ""}
           <label
             htmlFor="password2"
             className="w-[343px] flex flex-col p-[10px] rounded-[10px] bg-input relative"
@@ -132,7 +147,7 @@ function SignUp() {
               className={`${
                 isHide ? "text-2xl tracking-[6px]" : "text-base tracking-normal"
               } outline-none appearance-none w-[280px] h-[19px] pl-1 bg-transparent  text-[#000] font-400 leading-[19px] `}
-              {...register("passwordRe")}
+              {...register("password2")}
             />
             {!isHide ? (
               <svg
@@ -163,7 +178,7 @@ function SignUp() {
               </svg>
             )}
           </label>
-          {errors.passwordRe ? <span>{errors.passwordRe.message}</span> : ""}
+          {errors.password2 ? <span>{errors.password2.message}</span> : ""}
         </section>
         <section className="flex flex-col gap-4 mt-40 mb-[50px]">
           <button

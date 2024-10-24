@@ -1,22 +1,23 @@
 import axios from "axios";
 import { handleError } from "../Helpers/ErrorHanlder";
-import { UserProfileToken } from "../Models/User";
+import { UserProfile, UserProfileToken } from "../Models/User";
 
 const api = "https://event-planner-api-production.up.railway.app/api/";
 
 export const registerAPI = async (
-  email: string,
   username: string,
-  password: string,
-  passwordRe: string
+  password1: string,
+  password2: string,
+  email: string
 ) => {
   try {
     const data = await axios.post<UserProfileToken>(api + "registration/", {
-      email: email,
       username: username,
-      password: password,
-      passwordRe: passwordRe,
+      password1: password1,
+      password2: password2,
+      email: email,
     });
+    console.log(data);
     return data;
   } catch (error) {
     handleError(error);

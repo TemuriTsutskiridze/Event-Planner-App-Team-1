@@ -9,6 +9,8 @@ import axios from "axios";
 type UserContextType = {
   user: UserProfile | null;
   token: string | null;
+  err: any;
+  setErr: (error: any) => void;
   registerUser: (
     email: string,
     username: string,
@@ -29,6 +31,7 @@ export const UserProvider = ({ children }: Props) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isready, setIsReady] = useState(false);
+  const [err, setErr] = useState<any>(null);
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -43,47 +46,55 @@ export const UserProvider = ({ children }: Props) => {
   }, []);
 
   const registerUser = async (
-    email: string,
     username: string,
-    password: string,
-    passwordRe: string
+    password1: string,
+    password2: string,
+    email: string
   ) => {
-    await registerAPI(email, username, password, passwordRe)
+    await registerAPI(username, password1, password2, email)
       .then((res) => {
+        console.log(res);
         if (res) {
-          localStorage.setItem("token", res?.data.token);
+          // localStorage.setItem("token", res?.data.token);
           const userObj = {
             userName: res?.data.userName,
             email: res?.data.email,
             password: res?.data.password,
           };
           localStorage.setItem("user", JSON.stringify(userObj));
-          setToken(res?.data.token!);
+          // setToken(res?.data.token!);
           setUser(userObj!);
           toast.success("Login Success!");
           navigate("/Sign_in");
         }
       })
-      .catch((e) => toast.warning("Server error occured"));
+      .catch((e) => {
+        toast.warning("Server error occurred");
+      });
   };
 
   const loginUser = async (email: string, password: string) => {
     await loginAPI(email, password)
       .then((res) => {
+        console.log(res);
         if (res) {
-          localStorage.setItem("token", res?.data.token);
+          localStorage.setItem("token", res?.data.access);
           const userObj = {
-            password: res?.data.password,
-            email: res?.data.email,
+            password: res.config.data.password,
+            email: res.config.data.email,
           };
           localStorage.setItem("user", JSON.stringify(userObj));
-          setToken(res?.data.token!);
+          setToken(res?.data.access!);
           setUser(userObj!);
+          console.log(userObj);
           toast.success("Login Success!");
           navigate("/events");
         }
       })
-      .catch((e) => toast.warning("Server error occured"));
+      .catch((e) => {
+        toast.warning("Server error occurred");
+        console.log(e);
+      });
   };
 
   const isLoggedIn = () => {
@@ -100,7 +111,16 @@ export const UserProvider = ({ children }: Props) => {
 
   return (
     <UserContext.Provider
-      value={{ loginUser, user, token, logout, isLoggedIn, registerUser }}
+      value={{
+        loginUser,
+        user,
+        token,
+        logout,
+        err,
+        setErr,
+        isLoggedIn,
+        registerUser,
+      }}
     >
       {isready ? children : null}
     </UserContext.Provider>
