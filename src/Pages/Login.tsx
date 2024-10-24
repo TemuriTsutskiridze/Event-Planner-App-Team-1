@@ -49,15 +49,19 @@ function Login() {
 
   return (
     <main className="flex flex-col items-center">
-      <img src="/wlcm.png" alt="" className="w-[151px] h-[157px] mt-10" />
-      <h1 className="text-[25px] text-[#101010] leading-[29px] font-[700] mt-5">
+      <img
+        src="/wlcm.png"
+        alt=""
+        className="w-[151px] md:w-[200px] h-[157px] md:h-[200px] mt-10"
+      />
+      <h1 className="text-[25px] text-[#101010] leading-[29px] font-[700] mt-5 md:mt-[-8px]">
         Welcome back
       </h1>
       <form onSubmit={handleSubmit(handleLogin)}>
-        <section className="flex flex-col gap-4 mt-[46px]">
+        <section className="flex flex-col gap-4 mt-[46px] md:mt-[50px]">
           <label
             htmlFor="email"
-            className="w-[343px] flex flex-col p-[10px] rounded-[10px] bg-input"
+            className="w-[343px] md:w-[466px] flex flex-col p-[10px] rounded-[10px] bg-input"
           >
             <span className="text-sm text-[#858888] font-[500] leading-[16px]">
               Email
@@ -65,14 +69,14 @@ function Login() {
             <input
               id="email"
               type="text"
-              className="outline-none appearance-none w-[280px] bg-transparent text-base text-[#000] font-400 leading-[19px]"
+              className="outline-none appearance-none w-[280px] md:w-[380px] bg-transparent  text-base text-[#000] font-400 leading-[19px]"
               {...register("email")}
             />
           </label>
           {errors.email ? <span>{errors.email.message}</span> : ""}
           <label
             htmlFor="password"
-            className="w-[343px] flex flex-col p-[10px] rounded-[10px] bg-input relative"
+            className="w-[343px] md:w-[466px] flex flex-col p-[10px] rounded-[10px] bg-input relative"
           >
             <span className="text-sm text-[#858888] font-[500] leading-[16px]">
               Password
@@ -82,7 +86,7 @@ function Login() {
               type={isHide ? "password" : "text"}
               className={`${
                 isHide ? "text-2xl tracking-[6px]" : "text-base tracking-normal"
-              } outline-none appearance-none w-[280px] h-[19px] pl-1 bg-transparent  text-[#000] font-400 leading-[19px] `}
+              } outline-none appearance-none w-[280px] md:w-[380px] h-[19px] pl-1 bg-transparent  text-[#000] font-400 leading-[19px] `}
               {...register("password")}
             />
             {!isHide ? (
@@ -116,16 +120,16 @@ function Login() {
           </label>
           {errors.password ? <span>{errors.password.message}</span> : ""}
         </section>
-        <section className="flex flex-col gap-4 mt-40 mb-[50px]">
+        <section className="flex flex-col gap-4 mt-40 md:mt-[189px] mb-[50px]">
           <button
             type="submit"
-            className="w-[343px] h-[50px] rounded-[10px] bg-[#274d76] flex items-center justify-center text-base text-[#fff] font-normal leading-[19px]"
+            className="w-[343px] md:w-[466px] h-[50px] rounded-[10px] bg-[#274d76] flex items-center justify-center text-base text-[#fff] font-normal leading-[19px]"
             // onClick={() => navigate("/events")}
           >
             Sign in
           </button>
           <button
-            className="w-[343px] h-[50px] rounded-[10px] bg-[#fff] border-[2px] border-solid border-input flex items-center justify-center text-base text-[#274d76] font-normal leading-[19px]"
+            className="w-[343px] md:w-[466px] h-[50px] rounded-[10px] bg-[#fff] border-[2px] border-solid border-input flex items-center justify-center text-base text-[#274d76] font-normal leading-[19px]"
             onClick={() => navigate("/Sign_up")}
           >
             Create new account
